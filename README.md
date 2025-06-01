@@ -8,10 +8,12 @@
 2. Выполните команду:
 
 ```bash
-docker compose up --build
+`docker compose up --build`
 
 ### Если Docker не установлен 
 
-1. npm run start для запуска фронтенда
-2. npm run server для запуска сервера с базой данных
+1. `npm run start` для запуска фронтенда
+2. `npm run server` для запуска сервера с базой данных
+
+
 
