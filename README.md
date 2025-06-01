@@ -14,6 +14,24 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+### `npm run server`
+Launches a mock REST API server using json-server.
+The server watches the db.json file for changes and serves its contents as a RESTful API.
+
+By default, the server will be available at:
+http://localhost:3001
+
+Endpoints are automatically generated based on the keys in db.json.
+For example, if db.json contains { "posts": [...] }, the API will expose:
+
+GET /posts – Fetch all posts
+
+POST /posts – Create a new post
+
+PUT /posts/:id – Update a post
+
+DELETE /posts/:id – Delete a post
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
