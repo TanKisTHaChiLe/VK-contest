@@ -1,36 +1,4 @@
 {
-  "tables": [
-    {
-      "id": "1748803309671",
-      "name": "1",
-      "columns": [
-        {
-          "label": "fgh",
-          "type": "string",
-          "id": "1"
-        },
-        {
-          "label": "вапи",
-          "type": "string",
-          "id": "2"
-        },
-        {
-          "label": "свмаи",
-          "type": "string",
-          "id": "3"
-        },
-        {
-          "label": "свмаи",
-          "type": "string",
-          "id": "4"
-        },
-        {
-          "label": "всмиа",
-          "type": "string",
-          "id": "5"
-        }
-      ]
-    }
-  ],
+  "tables": [],
   "tableData": []
 }

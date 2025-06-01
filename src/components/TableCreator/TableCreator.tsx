@@ -170,7 +170,6 @@ const TableCreator: React.FC = observer(() => {
                           <MenuItem value="string">String</MenuItem>
                           <MenuItem value="number">Number</MenuItem>
                           <MenuItem value="date">Date</MenuItem>
-                          <MenuItem value="boolean">Boolean</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
