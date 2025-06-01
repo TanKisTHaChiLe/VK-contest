@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { observer } from 'mobx-react-lite';
+import React, { useState } from "react";
+import { observer } from "mobx-react-lite";
 import {
   Button,
   TextField,
@@ -13,36 +13,31 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
   IconButton,
   SelectChangeEvent,
-  Alert
-} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import CloseIcon from '@mui/icons-material/Close';
-import tableStore from '../../store/TableStore';
-import { TableColumn } from '../../types/table';
+  Alert,
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import CloseIcon from "@mui/icons-material/Close";
+import tableStore from "../../store/TableStore";
+import { TableColumn } from "../../types/table";
 
 const TableCreator: React.FC = observer(() => {
   const [showForm, setShowForm] = useState(false);
-  const [tableName, setTableName] = useState('');
-  const [columns, setColumns] = useState<Omit<TableColumn, 'id'>[]>([
-    { label: '', type: 'string' }
+  const [tableName, setTableName] = useState("");
+  const [columns, setColumns] = useState<Omit<TableColumn, "id">[]>([
+    { label: "", type: "string" },
   ]);
 
   if (tableStore.tables.length > 0) {
     return (
       <Box>
         <Alert severity="info" sx={{ mb: 2 }}>
-          You can only have one table. Delete the existing table to create a new one.
+          You can only have one table. Delete the existing table to create a new
+          one.
         </Alert>
-        <Button 
-          variant="contained"
-          color="primary"
-          disabled
-          sx={{ mb: 2 }}
-        >
+        <Button variant="contained" color="primary" disabled sx={{ mb: 2 }}>
           Create Table (disabled)
         </Button>
       </Box>
@@ -51,7 +46,7 @@ const TableCreator: React.FC = observer(() => {
 
   const handleAddColumn = () => {
     if (columns.length < 15) {
-      setColumns([...columns, { label: '', type: 'string' }]);
+      setColumns([...columns, { label: "", type: "string" }]);
     }
   };
 
@@ -63,7 +58,11 @@ const TableCreator: React.FC = observer(() => {
     }
   };
 
-  const handleColumnChange = (index: number, field: 'label' | 'type', value: string) => {
+  const handleColumnChange = (
+    index: number,
+    field: "label" | "type",
+    value: string
+  ) => {
     const newColumns = [...columns];
     newColumns[index] = { ...newColumns[index], [field]: value };
     setColumns(newColumns);
@@ -71,29 +70,29 @@ const TableCreator: React.FC = observer(() => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const columnsWithIds = columns.map((col, index) => ({
       ...col,
-      id: (index + 1).toString()
+      id: (index + 1).toString(),
     }));
-    
+
     tableStore.createNewTable(tableName, columnsWithIds);
-    
-    setTableName('');
-    setColumns([{ label: '', type: 'string' }]);
+
+    setTableName("");
+    setColumns([{ label: "", type: "string" }]);
     setShowForm(false);
   };
 
   const handleCancel = () => {
-    setTableName('');
-    setColumns([{ label: '', type: 'string' }]);
+    setTableName("");
+    setColumns([{ label: "", type: "string" }]);
     setShowForm(false);
   };
 
   return (
     <Box>
       {!showForm ? (
-        <Button 
+        <Button
           variant="contained"
           color="primary"
           onClick={() => setShowForm(true)}
@@ -109,7 +108,7 @@ const TableCreator: React.FC = observer(() => {
               aria-label="close"
               onClick={handleCancel}
               sx={{
-                position: 'absolute',
+                position: "absolute",
                 right: 8,
                 top: 8,
                 color: (theme) => theme.palette.grey[500],
@@ -130,32 +129,42 @@ const TableCreator: React.FC = observer(() => {
                   fullWidth
                 />
               </FormControl>
-              
+
               <Typography variant="h6" gutterBottom>
                 Columns (min 5, max 15)
               </Typography>
-              
+
               <Grid container spacing={2}>
                 {columns.map((col, index) => (
-                  <Grid item container spacing={2} key={index} alignItems="center">
+                  <Grid
+                    item
+                    container
+                    spacing={2}
+                    key={index}
+                    alignItems="center"
+                  >
                     <Grid item xs={5}>
                       <TextField
                         label="Column Label"
                         variant="outlined"
                         value={col.label}
-                        onChange={(e) => handleColumnChange(index, 'label', e.target.value)}
+                        onChange={(e) =>
+                          handleColumnChange(index, "label", e.target.value)
+                        }
                         required
                         fullWidth
                       />
                     </Grid>
-                    
+
                     <Grid item xs={5}>
                       <FormControl fullWidth>
                         <InputLabel>Type</InputLabel>
                         <Select
                           value={col.type}
                           label="Type"
-                          onChange={(e: SelectChangeEvent) => handleColumnChange(index, 'type', e.target.value)}
+                          onChange={(e: SelectChangeEvent) =>
+                            handleColumnChange(index, "type", e.target.value)
+                          }
                           required
                         >
                           <MenuItem value="string">String</MenuItem>
@@ -165,7 +174,7 @@ const TableCreator: React.FC = observer(() => {
                         </Select>
                       </FormControl>
                     </Grid>
-                    
+
                     <Grid item xs={2}>
                       {columns.length > 1 && (
                         <IconButton
@@ -179,8 +188,10 @@ const TableCreator: React.FC = observer(() => {
                   </Grid>
                 ))}
               </Grid>
-              
-              <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
+
+              <Box
+                sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}
+              >
                 <Button
                   variant="outlined"
                   color="primary"
@@ -190,7 +201,7 @@ const TableCreator: React.FC = observer(() => {
                 >
                   Add Column
                 </Button>
-                
+
                 <Box>
                   <Button
                     variant="outlined"
@@ -200,7 +211,7 @@ const TableCreator: React.FC = observer(() => {
                   >
                     Cancel
                   </Button>
-                  
+
                   <Button
                     type="submit"
                     variant="contained"

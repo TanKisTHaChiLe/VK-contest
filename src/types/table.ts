@@ -1,7 +1,7 @@
 export interface TableColumn {
   id: string;
   label: string;
-  type: 'string' | 'number' | 'date' | 'boolean';
+  type: "string" | "number" | "date" | "boolean";
 }
 
 export interface TableConfig {

@@ -1,9 +1,9 @@
-import React from 'react';
-import { observer } from 'mobx-react-lite';
-import { Box, CssBaseline, Container, Grid } from '@mui/material';
-import TableCreator from './components/TableCreator/TableCreator';
-import TableList from './components/TableList/TableList';
-import DataTable from './components/DataTable/DataTable';
+import React from "react";
+import { observer } from "mobx-react-lite";
+import { Box, CssBaseline, Container, Grid } from "@mui/material";
+import TableCreator from "./components/TableCreator/TableCreator";
+import TableList from "./components/TableList/TableList";
+import DataTable from "./components/DataTable/DataTable";
 
 const App: React.FC = observer(() => {
   return (

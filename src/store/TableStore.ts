@@ -1,6 +1,12 @@
-import { makeAutoObservable, runInAction } from 'mobx';
-import { TableConfig, TableColumn } from '../types/table';
-import { fetchTables, createTable, fetchTableData, addTableRow, deleteTable } from '../api/tableApi';
+import { makeAutoObservable, runInAction } from "mobx";
+import { TableConfig, TableColumn } from "../types/table";
+import {
+  fetchTables,
+  createTable,
+  fetchTableData,
+  addTableRow,
+  deleteTable,
+} from "../api/tableApi";
 
 class TableStore {
   tables: TableConfig[] = [];
@@ -27,7 +33,8 @@ class TableStore {
       });
     } catch (error) {
       runInAction(() => {
-        this.error = error instanceof Error ? error.message : 'Failed to load tables';
+        this.error =
+          error instanceof Error ? error.message : "Failed to load tables";
       });
     } finally {
       runInAction(() => {
@@ -42,7 +49,7 @@ class TableStore {
       const newTable = await createTable({
         id: Date.now().toString(),
         name,
-        columns
+        columns,
       });
       runInAction(() => {
         this.tables.push(newTable);
@@ -51,7 +58,8 @@ class TableStore {
       });
     } catch (error) {
       runInAction(() => {
-        this.error = error instanceof Error ? error.message : 'Failed to create table';
+        this.error =
+          error instanceof Error ? error.message : "Failed to create table";
       });
     } finally {
       runInAction(() => {
@@ -64,9 +72,9 @@ class TableStore {
     this.isLoading = true;
     try {
       await deleteTable(tableId);
-      
+
       runInAction(() => {
-        this.tables = this.tables.filter(t => t.id !== tableId);
+        this.tables = this.tables.filter((t) => t.id !== tableId);
         if (this.currentTable?.id === tableId) {
           this.currentTable = null;
         }
@@ -74,7 +82,8 @@ class TableStore {
       });
     } catch (error) {
       runInAction(() => {
-        this.error = error instanceof Error ? error.message : 'Failed to delete table';
+        this.error =
+          error instanceof Error ? error.message : "Failed to delete table";
       });
     } finally {
       runInAction(() => {
@@ -83,49 +92,55 @@ class TableStore {
     }
   }
 
- async loadTableData(tableId: string, loadMore = false) {
-  if (loadMore) {
-    if (!this.hasMore || this.isLoadingMore) return;
-    this.isLoadingMore = true;
-  } else {
-    this.isLoading = true;
-    this.currentPage = 1;
-    this.hasMore = true;
-  }
+  async loadTableData(tableId: string, loadMore = false) {
+    if (loadMore) {
+      if (!this.hasMore || this.isLoadingMore) return;
+      this.isLoadingMore = true;
+    } else {
+      this.isLoading = true;
+      this.currentPage = 1;
+      this.hasMore = true;
+    }
 
-  try {
-    const { data, total } = await fetchTableData(tableId, this.currentPage, this.pageSize);
-    
-    runInAction(() => {
-      if (loadMore) {
-        this.tableData[tableId] = [...(this.tableData[tableId] || []), ...data];
-      } else {
-        this.tableData[tableId] = data;
-      }
-      
-      // Обновляем флаг hasMore
-      const currentDataLength = this.tableData[tableId]?.length || 0;
-      this.hasMore = currentDataLength < total;
-      
-      // Увеличиваем страницу только если получили данные
-      if (data.length > 0) {
-        this.currentPage += 1;
-      }
-    });
-  } catch (error) {
-    runInAction(() => {
-      this.error = error instanceof Error ? error.message : 'Failed to load table data';
-    });
-  } finally {
-    runInAction(() => {
-      if (loadMore) {
-        this.isLoadingMore = false;
-      } else {
-        this.isLoading = false;
-      }
-    });
+    try {
+      const { data, total } = await fetchTableData(
+        tableId,
+        this.currentPage,
+        this.pageSize
+      );
+
+      runInAction(() => {
+        if (loadMore) {
+          this.tableData[tableId] = [
+            ...(this.tableData[tableId] || []),
+            ...data,
+          ];
+        } else {
+          this.tableData[tableId] = data;
+        }
+
+        const currentDataLength = this.tableData[tableId]?.length || 0;
+        this.hasMore = currentDataLength < total;
+
+        if (data.length > 0) {
+          this.currentPage += 1;
+        }
+      });
+    } catch (error) {
+      runInAction(() => {
+        this.error =
+          error instanceof Error ? error.message : "Failed to load table data";
+      });
+    } finally {
+      runInAction(() => {
+        if (loadMore) {
+          this.isLoadingMore = false;
+        } else {
+          this.isLoading = false;
+        }
+      });
+    }
   }
-}
 
   resetPagination() {
     this.currentPage = 1;
@@ -140,7 +155,8 @@ class TableStore {
       });
     } catch (error) {
       runInAction(() => {
-        this.error = error instanceof Error ? error.message : 'Failed to add row';
+        this.error =
+          error instanceof Error ? error.message : "Failed to add row";
       });
     }
   }
