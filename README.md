@@ -20,8 +20,9 @@
 
 ```bash
 docker compose up --build
+```
 
 ### Способ 2: Если Docker отсутствует
 
-1. npm run start для запуска фронтенда
-2. npm run server для запуска сервера
+1. ```npm run start``` для запуска фронтенда
+2. ```npm run server``` для запуска сервера
